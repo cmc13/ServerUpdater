@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="ServerUpdater" Language="1033" Version="1.0.0.0" Manufacturer="Cole Cameron" UpgradeCode="72045a1f-e6c8-4ce9-8b79-2231b7e3bc21">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Manufacturer="Cole Cameron" Description="Setup for Server Updater" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Feature Id="ProductFeature" Title="ServerUpdater.Setup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="ServerUpdater" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ServerUpdaterExe" Guid="{5C160594-C5C9-4EB1-A762-C1F9A2C83761}">
+        <File Id="ServerUpdater.exe" Name="ServerUpdater.exe"
+              Source="..\ServerUpdater\bin\$(var.ServerUpdater.Configuration)\ServerUpdater.exe" KeyPath="yes" />
+      </Component>
+      
+      <Component Id="ServerUpdaterExeConfig" Guid="{64D93F3F-1E8F-4E9E-BA8E-DFFD7271F24B}">
+        <File Id="ServerUpdater.exe.config" Name="ServerUpdater.exe.config"
+              Source="..\ServerUpdater\bin\$(var.ServerUpdater.Configuration)\ServerUpdater.exe.config" KeyPath="yes" />
+      </Component>
+    
+      <Component Id="NLogDll" Guid="{0244B510-EBAB-47D8-97EC-6D3D4E2A9F3E}">
+        <File Id="NLog.dll" Name="NLog.dll"
+              Source="..\ServerUpdater\bin\$(var.ServerUpdater.Configuration)\NLog.dll" KeyPath="yes" />
+      </Component>
+    
+      <Component Id="NDeskOptionsDll" Guid="{8BDC2704-89D4-4D54-B840-E5FD557C3DB8}">
+        <File Id="NDesk.Options.dll" Name="NDesk.Options.dll"
+              Source="..\ServerUpdater\bin\$(var.ServerUpdater.Configuration)\NDesk.Options.dll" KeyPath="yes" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
